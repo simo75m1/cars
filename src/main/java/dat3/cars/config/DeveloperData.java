@@ -25,6 +25,5 @@ public class DeveloperData implements ApplicationRunner{
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        memberRepository.save(new Member("simonhansen", "testkode2", "simonhansen2000@gmail.com", "Simon", "Hansen", "Elstarvej 24", "Valby", "2500"));
     }
 }
