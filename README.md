@@ -26,10 +26,8 @@ It simplifies database "commands" and operations, and therefor makes it easier t
    The auto-incremented id of the class Car is a Long. After dependency injecting the "CarRepository" into my Controller i can now use the different methods from Spring       Data API to add these objects to my database
 
 
-   
--How to write simple "integration" tests, using H2 as a mock-database instead of MySQL
-   How you did that in your code
-
+-How to write simple "integration" tests, using H2 as a mock-database instead of MySQL & how you did that in your code
+   In the file "RepositoryTests" i have written a few tests for my repositories. It still seems to use mySQL as i could not figure out how to set up the mock H2 database yet.
   
-H-ow to add (dev) connection details for you local MySQL database
-   How you did that
+-How to add (dev) connection details for you local MySQL database
+   Spring.datasource variables are added to the "application.properties" file. After that you can edit the environment variables locally on your machine, so they match your connection credentials to your database. 
