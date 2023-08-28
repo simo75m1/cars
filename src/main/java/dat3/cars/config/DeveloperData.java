@@ -7,7 +7,6 @@ import dat3.cars.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -25,6 +24,8 @@ public class DeveloperData implements ApplicationRunner{
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+
+        //Car test data created by chat-gpt
         carRepository.save(new Car("Toyota", "Supra", 1500, 500));
         carRepository.save(new Car("Toyota", "Camry", 1200, 250));
         carRepository.save(new Car("Ford", "Mustang", 1000, 150));
