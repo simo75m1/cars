@@ -38,18 +38,21 @@ class MemberController {
     MemberResponse addMember(@RequestBody MemberRequest body){
         return memberService.addMember(body);
     }
-    //Security ???
+    //Security --> Admin
     @PutMapping("/{username}")
     ResponseEntity<Boolean> editMember(@RequestBody MemberRequest body, @PathVariable String username){
         return memberService.editMember(body, username);
     }
-    //Security ????
+    //Security ADMIN
     @PatchMapping("/ranking/{username}/{value}")
-    ResponseEntity<Boolean> setRankingForUser(@PathVariable String username, @PathVariable int value) {
-        return null;
+    void setRankingForUser(@PathVariable String username, @PathVariable int value) {
+        memberService.setRankingForUser(username,value);
     }
-    // Security ????
+
+    // Security ADMIN
     @DeleteMapping("/{username}")
-    void deleteMemberByUsername(@PathVariable String username) {}
+    void deleteMemberByUsername(@PathVariable String username) {
+        memberService.deleteMemberByUsername(username);
+    }
 }
 

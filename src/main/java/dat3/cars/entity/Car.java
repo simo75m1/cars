@@ -33,4 +33,11 @@ public class Car extends AdminDetails
         this.bestDiscount = bestDiscount;
     }
 
+    public Car(Long id, String brand, String model, double pricePrDay, Integer bestDiscount) {
+        this.id = id;
+        this.brand = brand;
+        this.model = model;
+        this.pricePrDay = pricePrDay;
+        this.bestDiscount = bestDiscount;
+    }
 }
