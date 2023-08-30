@@ -1,7 +1,6 @@
-package dat3.cars.dto;
+package dat3.car.dto;
 
-import dat3.cars.entity.Car;
-import jakarta.persistence.Column;
+import dat3.car.entity.Car;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

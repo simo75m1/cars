@@ -1,10 +1,9 @@
-package dat3.cars.service;
+package dat3.car.service;
 
-import dat3.cars.dto.CarRequest;
-import dat3.cars.dto.CarResponse;
-import dat3.cars.entity.Car;
-import dat3.cars.entity.Member;
-import dat3.cars.repository.CarRepository;
+import dat3.car.dto.CarRequest;
+import dat3.car.dto.CarResponse;
+import dat3.car.entity.Car;
+import dat3.car.repository.CarRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,8 +32,7 @@ public class CarService {
         return response;
     }
     public CarResponse getCarById(long id) {
-        Car car = carRepository.findById(id).
-                orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Car with this id does not exist"));
+        Car car = findCarById(id);
         return new CarResponse(car, true);
     }
 
@@ -61,8 +59,7 @@ public class CarService {
 
 
     public ResponseEntity<Boolean> editCar(CarRequest body, long id) {
-        Car car = carRepository.findById(id).
-                orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Car with this id does not exist"));
+        Car car = findCarById(id);
         if(!body.getId().equals(id)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cannot change car id");
         }
@@ -80,8 +77,6 @@ public class CarService {
         return carRepository.findById(id).
                 orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Car with this id does not exist"));
     }
-
-
     public void setBestDiscount(long id, int discount) {
         Car car = findCarById(id);
         car.setBestDiscount(discount);

@@ -1,7 +1,7 @@
-package dat3.cars.repository;
+package dat3.car.repository;
 
-import dat3.cars.entity.Car;
-import dat3.cars.entity.Member;
+import dat3.car.entity.Car;
+import dat3.car.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

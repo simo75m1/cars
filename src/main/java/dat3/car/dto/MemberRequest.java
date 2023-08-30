@@ -1,13 +1,13 @@
-package dat3.cars.dto;
+package dat3.car.dto;
 
-import dat3.cars.entity.Member;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import dat3.car.entity.Member;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor //A must for @Builder
+@Builder
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberRequest {
     String username;

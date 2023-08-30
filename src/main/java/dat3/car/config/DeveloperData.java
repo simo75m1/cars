@@ -1,9 +1,9 @@
-package dat3.cars.config;
+package dat3.car.config;
 
-import dat3.cars.entity.Car;
-import dat3.cars.entity.Member;
-import dat3.cars.repository.CarRepository;
-import dat3.cars.repository.MemberRepository;
+import dat3.car.entity.Car;
+import dat3.car.entity.Member;
+import dat3.car.repository.CarRepository;
+import dat3.car.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

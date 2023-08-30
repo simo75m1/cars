@@ -1,4 +1,4 @@
-package dat3.cars.entity;
+package dat3.car.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

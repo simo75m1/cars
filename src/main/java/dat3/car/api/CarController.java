@@ -1,8 +1,8 @@
-package dat3.cars.api;
+package dat3.car.api;
 
-import dat3.cars.dto.CarRequest;
-import dat3.cars.dto.CarResponse;
-import dat3.cars.service.CarService;
+import dat3.car.dto.CarRequest;
+import dat3.car.dto.CarResponse;
+import dat3.car.service.CarService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,9 +1,9 @@
-package dat3.cars.service;
+package dat3.car.service;
 
-import dat3.cars.dto.MemberRequest;
-import dat3.cars.dto.MemberResponse;
-import dat3.cars.entity.Member;
-import dat3.cars.repository.MemberRepository;
+import dat3.car.dto.MemberRequest;
+import dat3.car.dto.MemberResponse;
+import dat3.car.entity.Member;
+import dat3.car.repository.MemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,6 +28,9 @@ public class MemberService {
             MemberResponse mr = new MemberResponse(member, includeAll);
             response.add(mr);
         }
+        /* Alternativ løsning til response og for loop
+        List<MemberResponse> response = members.stream().map((member -> new MemberResponse(member, includeAll))).toList();
+        */
         return response;
     }
     public MemberResponse addMember(MemberRequest body)
@@ -42,8 +45,7 @@ public class MemberService {
     }
 
     public ResponseEntity<Boolean> editMember(MemberRequest body, String username) {
-        Member member = memberRepository.findById(username).
-                orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Member with this username does not exist"));
+        Member member = getMemberByUsername(username);
         if(!body.getUsername().equals(username)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cannot change username");
         }
@@ -59,14 +61,13 @@ public class MemberService {
     }
     public MemberResponse findById(String username)
     {
-        Member member = memberRepository.findById(username).
-                orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Member with this username does not exist"));
+        Member member = getMemberByUsername(username);
         return new MemberResponse(member, true);
     }
 
     private Member getMemberByUsername(String username){
         return memberRepository.findById(username).
-                orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Member with this username does not exist"));
+                orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this username does not exist"));
     }
     public void setRankingForUser(String username, int value) {
         Member member = getMemberByUsername(username);

@@ -1,14 +1,11 @@
-package dat3.cars;
+package dat3.car;
 
-import jakarta.persistence.Entity;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories("dat3.cars.repository")
+@EnableJpaRepositories("dat3.car.repository")
 public class CarsApplication {
 
     public static void main(String[] args) {
