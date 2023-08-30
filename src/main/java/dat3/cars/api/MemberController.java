@@ -2,8 +2,6 @@ package dat3.cars.api;
 
 import dat3.cars.dto.MemberRequest;
 import dat3.cars.dto.MemberResponse;
-import dat3.cars.entity.Member;
-import dat3.cars.repository.MemberRepository;
 import dat3.cars.service.MemberService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
