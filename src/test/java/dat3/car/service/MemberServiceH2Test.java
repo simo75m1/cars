@@ -4,11 +4,8 @@ import dat3.car.dto.MemberRequest;
 import dat3.car.dto.MemberResponse;
 import dat3.car.entity.Member;
 import dat3.car.repository.MemberRepository;
-import net.bytebuddy.implementation.bytecode.Throw;
-import org.apache.coyote.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.HttpStatus;
@@ -17,9 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 
 @DataJpaTest
@@ -43,7 +38,7 @@ class MemberServiceH2Test {
         List<MemberResponse> memberResponses = memberService.getMembers(true);
         assertEquals(2, memberResponses.size(), "Expects 2 members");
         LocalDateTime time = memberResponses.get(0).getCreated();
-        assertNotNull(time, "Excepts dates to be set when true is passed");
+        assertNotNull(time, "Expects dates to be set when true is passed");
     }
 
     @Test
@@ -69,34 +64,64 @@ class MemberServiceH2Test {
 
     @Test
         /* Remember MemberRequest comes from the API layer, and MemberResponse is returned to the API layer
-         * Internally addMember savex a Member entity to the database*/
+         * Internally addMember saves a Member entity to the database*/
     void testAddMember_UserDoesNotExist() {
         //Add @AllArgsConstructor to MemberRequest and @Builder to MemberRequest for this to work
-        //TODO
+        MemberRequest request = MemberRequest.builder().
+                username("user3").
+                password("pw3").
+                build();
+        MemberResponse res = memberService.addMember(request);
+        assertEquals("user3", res.getUsername());
+        //Here we use the repository to verify that the member was actually saved
+        assertTrue(memberRepository.existsById("user3"));
+
     }
 
     @Test
-    void testAddMember_UserDoesExistThrows() {
-        //This should test that a ResponseStatus exception is thrown with status= 409 (BAD_REQUEST)
-        //TODO
+    void testAddMember_UserDoesExist() {
+        MemberRequest request = new MemberRequest();
+        request.setUsername("user1");
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> memberService.addMember(request));
+        assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
     }
-    //over her 2
+
     @Test
     void testEditMemberWithExistingUsername() {
-        //TODO
-    }
-
-    @Test
-    void testEditMemberNON_ExistingUsernameThrows() {
-        //This should test that a ResponseStatus exception is thrown with status= 404 (NOT_FOUND)
-        //TODO
-    }
-
-    @Test
-    void testEditMemberChangePrimaryKeyThrows() {
         //Create a MemberRequest from an existing member we can edit
         MemberRequest request = new MemberRequest(m1);
-        //TODO
+        request.setFirstName("New First Name");
+        request.setLastName("New Last Name");
+
+        memberService.editMember(request, "user1");
+
+        memberRepository.flush();
+        MemberResponse response = memberService.findById("user1");
+
+        assertEquals("user1", response.getUsername());
+        assertEquals("New First Name", response.getFirstName());
+        assertEquals("New Last Name", response.getLastName());
+        assertEquals("email1", response.getEmail());
+        assertEquals("street1", response.getStreet());
+        assertEquals("city1", response.getCity());
+        assertEquals("zip1", response.getZip());
+    }
+
+    @Test
+    void testEditMemberNON_ExistingUsername() {
+        MemberRequest memberRequest = new MemberRequest();
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> memberService.editMember(memberRequest, "I dont exist"));
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+    }
+
+    @Test
+    void testEditMemberChangePrimaryKey() {
+        //Create a MemberRequest from an existing member we can edit
+        MemberRequest request = new MemberRequest(m1);
+        request.setUsername("New Username");
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> memberService.editMember(request, "user1"));
+        assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+        assertEquals("Cannot change username", ex.getReason());
     }
 
     //3 over her
@@ -104,24 +129,26 @@ class MemberServiceH2Test {
 
     @Test
     void testSetRankingForUser() {
-        memberService.setRankingForUser(m1.getUsername(), 4);
-        assertEquals(true,m1.getRanking() == 4);
+        memberService.setRankingForUser("user1", 5);
+        MemberResponse response = memberService.findById("user1");
+        assertEquals(5, response.getRanking());
     }
 
     @Test
     void testSetRankingForNoExistingUser() {
-        assertThrows(ResponseStatusException.class, () -> {memberService.setRankingForUser("user10", 6);});
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> memberService.setRankingForUser("I dont exist", 5));
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
     }
     @Test
     void testDeleteMemberByUsername() {
         memberService.deleteMemberByUsername("user1");
-        assertThrows(ResponseStatusException.class, () -> {memberService.findById("user1");});
-
+        assertFalse(memberRepository.existsById("user1"));
     }
 
     @Test
     void testDeleteMember_ThatDontExist() {
-        assertThrows(ResponseStatusException.class, () -> {memberService.deleteMemberByUsername("user10");});
+        ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> memberService.deleteMemberByUsername("I dont exist"));
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
     }
 
     //Vi tester sidste 4

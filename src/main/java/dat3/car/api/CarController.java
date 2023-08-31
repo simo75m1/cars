@@ -27,7 +27,7 @@ public class CarController {
     //Security --> Admin only
     @GetMapping(path = "/{id}")
     CarResponse getCarById(@PathVariable long id) throws Exception{
-        return carService.getCarById(id);
+        return carService.findById(id);
     }
 
     //Can be used to filter results for customers

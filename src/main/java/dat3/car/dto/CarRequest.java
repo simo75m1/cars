@@ -1,13 +1,13 @@
 package dat3.car.dto;
 
 import dat3.car.entity.Car;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor //A must for @Builder
+@Builder
 public class CarRequest {
     private Long id;
     private String brand;
@@ -19,11 +19,11 @@ public class CarRequest {
         return new Car(c.getId(), c.getBrand(), c.getModel(), c.getPricePrDay(), c.getBestDiscount());
     }
 
-    public CarRequest(Long id, String brand, String model, double pricePrDay, Integer bestDiscount) {
-        this.id = id;
-        this.brand = brand;
-        this.model = model;
-        this.pricePrDay = pricePrDay;
-        this.bestDiscount = bestDiscount;
+    public CarRequest(Car c) {
+        this.id = c.getId();
+        this.brand = c.getBrand();
+        this.model = c.getModel();
+        this.pricePrDay = c.getPricePrDay();
+        this.bestDiscount = c.getBestDiscount();
     }
 }

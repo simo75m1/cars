@@ -31,7 +31,7 @@ public class CarService {
         }
         return response;
     }
-    public CarResponse getCarById(long id) {
+    public CarResponse findById(long id) {
         Car car = findCarById(id);
         return new CarResponse(car, true);
     }
@@ -75,7 +75,7 @@ public class CarService {
     //Used to get specific car, only for backend usage in service class. No CarResponse needed for this.
     private Car findCarById(long id){
         return carRepository.findById(id).
-                orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Car with this id does not exist"));
+                orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Car with this id does not exist"));
     }
     public void setBestDiscount(long id, int discount) {
         Car car = findCarById(id);
