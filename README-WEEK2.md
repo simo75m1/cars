@@ -1,8 +1,8 @@
 - What are the benefits of using a RESTful API
-
+RESTFUL API is easy to use and set up because it uses standard http methods. It is able to use notation languages like JSON, HTML and more which are very simple to understand both for the user and the program.
 
 - What is JSON, and why does JSON fit so well with REST?
-JSON (JavaScript Object Notation) 
+JSON (JavaScript Object Notation) fits well because REST uses these standard HTTP methods. Using JSON is very simple for the user, and is also very easy for the program to understand. These requests and responses using http requests can easily be set up the way the developer wants it to. 
 
 - How you have designed simple CRUD endpoints using spring boot and DTOs to separate api from data  -> Focus on your use of DTO's
 The RestController that has the CRUD endpoints, only communicate with the correlating service class. The controller receives the JSON body and places it in the format of a Request using @RequestBody
