@@ -12,12 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.event.annotation.AfterTestMethod;
 import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @DataJpaTest
 class CarServiceH2Test
 {
@@ -32,9 +34,9 @@ class CarServiceH2Test
     void setUp() {
         c1 = carRepository.save(new Car(1,"Toyota", "Aygo", 300, 100));
         c2 = carRepository.save(new Car(2,"Toyota", "Supra", 600, 300));
-        carService = new CarService(carRepository); //Set up memberService with the mock (H2) database
+        carService = new CarService(carRepository); //Set up carService with the mock (H2) database
     }
-    @AfterTestMethod
+    @AfterEach
     void tearDown(){
         c1 = null;
         c2 = null;
