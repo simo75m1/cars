@@ -19,7 +19,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD) //Fixer problem med auto increment af id under tests. Skal være der ellers fejler tests.
 @DataJpaTest
 class CarServiceH2Test
 {

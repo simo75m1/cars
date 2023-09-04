@@ -2,10 +2,15 @@ package dat3.car.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 public class Car extends AdminDetails
 {
@@ -21,9 +26,14 @@ public class Car extends AdminDetails
     @Column(name="max_discount")
     private Integer bestDiscount;
 
+    @OneToMany(mappedBy = "car", cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
+    List<Reservation> reservations = new ArrayList<>();
 
-    public Car()
-    {}
+    public void addReservation(Reservation reservation)
+    {
+        reservations.add(reservation);
+        reservation.setCar(this);
+    }
 
     public Car(String brand, String model, double pricePrDay, int bestDiscount)
     {

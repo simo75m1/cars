@@ -7,9 +7,10 @@ import dat3.car.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 
-@Controller
+@Configuration
 public class DeveloperData implements ApplicationRunner{
 
     CarRepository carRepository;

@@ -1,13 +1,16 @@
 package dat3.car.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 public class Member extends AdminDetails
 {
@@ -33,7 +36,15 @@ public class Member extends AdminDetails
     @Column(name = "ranking")
     private int ranking;
 
-    public Member(){}
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
+    List<Reservation> reservations = new ArrayList<>();
+    public void addReservation(Reservation reservation)
+    {
+        reservations.add(reservation);
+        reservation.setMember(this);
+    }
+
+
 
     public Member(String user, String password, String email, String firstName,
                   String lastName, String street, String city, String zip) {
