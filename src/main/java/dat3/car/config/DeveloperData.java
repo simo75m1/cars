@@ -2,25 +2,29 @@ package dat3.car.config;
 
 import dat3.car.entity.Car;
 import dat3.car.entity.Member;
+import dat3.car.entity.Reservation;
 import dat3.car.repository.CarRepository;
 import dat3.car.repository.MemberRepository;
+import dat3.car.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDate;
+
 @Configuration
 public class DeveloperData implements ApplicationRunner{
 
     CarRepository carRepository;
     MemberRepository memberRepository;
+    ReservationRepository reservationRepository;
 
-    @Autowired
-    public DeveloperData(CarRepository carRepository, MemberRepository memberRepository)
-    {
+    public DeveloperData(CarRepository carRepository, MemberRepository memberRepository, ReservationRepository reservationRepository) {
         this.carRepository = carRepository;
         this.memberRepository = memberRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
@@ -80,6 +84,18 @@ public class DeveloperData implements ApplicationRunner{
 
         memberRepository.save(new Member("simo75m1", "testkode1", "simo75m1@stud.kea.dk", "Simon", "Hansen", "Elstarvej 24", "Valby", "2500"));
         memberRepository.save(new Member("simonhansen", "testkode1", "simonhansen2000@hotmail.com", "Simon", "Hansen", "Elstarvej 24", "Valby", "2500"));
+
+        Car car1 = new Car("VW", "Golf", 760, 25);
+        Member m1 = new Member("Jan","test12","a@b.dk","Jan","Jensen","Lyngbyvej 1","Lyngby","2800");
+        carRepository.save(car1);
+        memberRepository.save(m1);
+
+        LocalDate date1 = LocalDate.now().plusDays(2);
+        LocalDate date2 = LocalDate.now().plusDays(3);
+        Reservation r1 = new Reservation(date1, car1, m1);
+        Reservation r2 = new Reservation(date2, car1, m1);
+        reservationRepository.save(r1);
+        reservationRepository.save(r2);
 
     }
 }

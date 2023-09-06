@@ -5,24 +5,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-public class Reservation {
+public class Reservation extends AdminDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    String reservationDate;
-    String rentalDate;
 
+    LocalDate rentalDate;
     @ManyToOne
     Car car;
     @ManyToOne
     Member member;
 
-    public Reservation(String reservationDate, String rentalDate) {
-        this.reservationDate = reservationDate;
+    public Reservation(LocalDate rentalDate, Car car, Member member) {
         this.rentalDate = rentalDate;
+        this.car = car;
+        this.member = member;
+        car.addReservation(this);
+        member.addReservation(this);
     }
 }

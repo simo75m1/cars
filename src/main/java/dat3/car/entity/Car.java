@@ -27,12 +27,14 @@ public class Car extends AdminDetails
     private Integer bestDiscount;
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
-    List<Reservation> reservations = new ArrayList<>();
+    List<Reservation> reservations;
 
     public void addReservation(Reservation reservation)
     {
+        if (reservations == null){
+            reservations = new ArrayList<>();
+        }
         reservations.add(reservation);
-        reservation.setCar(this);
     }
 
     public Car(String brand, String model, double pricePrDay, int bestDiscount)

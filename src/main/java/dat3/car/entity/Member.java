@@ -37,11 +37,13 @@ public class Member extends AdminDetails
     private int ranking;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
-    List<Reservation> reservations = new ArrayList<>();
+    List<Reservation> reservations;
     public void addReservation(Reservation reservation)
     {
+        if (reservations == null){
+            reservations = new ArrayList<>();
+        }
         reservations.add(reservation);
-        reservation.setMember(this);
     }
 
 
