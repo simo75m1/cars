@@ -3,6 +3,7 @@ package dat3.car.service;
 import dat3.car.dto.MemberRequest;
 import dat3.car.dto.MemberResponse;
 import dat3.car.entity.Member;
+import dat3.car.entity.Reservation;
 import dat3.car.repository.MemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +65,6 @@ public class MemberService {
         Member member = getMemberByUsername(username);
         return new MemberResponse(member, true);
     }
-
     private Member getMemberByUsername(String username){
         return memberRepository.findById(username).
                 orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this username does not exist"));
@@ -78,4 +78,12 @@ public class MemberService {
         Member member = getMemberByUsername(username);
         memberRepository.delete(member);
     }
+
+
+    public List<Member> findAllMembersWithReservation(){
+        //TODO
+        return null;
+    }
+
+
 }

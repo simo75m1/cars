@@ -7,19 +7,18 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor //A must for @Builder
-@Builder
 public class ReservationResponse {
-
     int id;
-    int carId;
+    long carId;
     String brand;
     String model;
+    double price;
     LocalDate reservationDate;
 
     public ReservationResponse(Reservation reservation) {
         this.id = reservation.getId();
-        this.carId = Math.toIntExact(reservation.getCar().getId());
+        this.price = reservation.getCar().getPricePrDay();
+        this.carId = reservation.getCar().getId();
         this.brand = reservation.getCar().getBrand();
         this.model = reservation.getCar().getModel();
         this.reservationDate = reservation.getRentalDate();

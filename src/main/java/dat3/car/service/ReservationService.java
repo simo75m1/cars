@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.w3c.dom.html.HTMLHtmlElement;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ReservationService {
@@ -36,7 +37,27 @@ public class ReservationService {
         Car car = carRepository.findById((long) body.getCarId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"No Car with this id found"));
         //What if already reserved  --> Tomorrow
+        if(reservationRepository.existsByCar_IdAndRentalDate(body.getCarId(), body.getDate())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Car is already reserved on this date");
+        }
         Reservation res = reservationRepository.save(new Reservation(body.getDate(),car,member));
-        return  new ReservationResponse(res);
+        return new ReservationResponse(res);
     }
+
+    public List<Reservation> findAllReservations(){
+        //TODO
+        return null;
+    }
+    public List<Reservation> findAllReservationsByMember(Member member){
+        //TODO
+        return null;
+    }
+    public void deleteReservation(Reservation reservation){
+        //TODO
+    }
+    public void editReservationDate(Reservation reservation, LocalDate newDate){
+        //TODO
+    }
+
+
 }

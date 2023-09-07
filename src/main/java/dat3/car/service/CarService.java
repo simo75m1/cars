@@ -87,4 +87,8 @@ public class CarService {
         carRepository.delete(car);
     }
 
+    public List<Car> findAllUnreservedCars(){
+        //TODO
+        return null;}
+
 }
