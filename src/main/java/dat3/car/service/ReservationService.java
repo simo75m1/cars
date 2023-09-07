@@ -14,12 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 import org.w3c.dom.html.HTMLHtmlElement;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ReservationService {
-    ReservationRepository reservationRepository;
-    MemberRepository memberRepository;
+    static ReservationRepository reservationRepository;
+    static MemberRepository memberRepository;
     CarRepository carRepository;
 
     public ReservationService(ReservationRepository reservationRepository, MemberRepository memberRepository, CarRepository carRepository) {
@@ -44,13 +45,26 @@ public class ReservationService {
         return new ReservationResponse(res);
     }
 
-    public List<Reservation> findAllReservations(){
-        //TODO
-        return null;
+    public List<ReservationResponse> getReservations(){
+        List<Reservation> reservations = reservationRepository.findAll();
+        List<ReservationResponse> response = new ArrayList<>();
+        for(Reservation reservation : reservations){
+            ReservationResponse rr = new ReservationResponse(reservation);
+            response.add(rr);
+        }
+        return response;
     }
-    public List<Reservation> findAllReservationsByMember(Member member){
-        //TODO
-        return null;
+    public static List<ReservationResponse> getReservationsByMember(Member member){
+        if(!memberRepository.existsById(member.getUsername())){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this username does not exist");
+        }
+        List<Reservation> reservations = reservationRepository.findAllReservationsByMemberUsername(member.getUsername());
+        List<ReservationResponse> response = new ArrayList<>();
+        for(Reservation reservation : reservations){
+            ReservationResponse rr = new ReservationResponse(reservation);
+            response.add(rr);
+        }
+        return response;
     }
     public void deleteReservation(Reservation reservation){
         //TODO
