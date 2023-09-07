@@ -36,7 +36,10 @@ public class CarController {
     List<CarResponse> getCarByBrand(@PathVariable String brand)throws Exception {
         return carService.getCarsByBrand(brand);
     }
-
+    @GetMapping(path="/{brand}/{model}")
+    List<CarResponse> getCarByBrandAndModel(@PathVariable String brand, @PathVariable String model) throws Exception{
+        return carService.getCarsByBrandAndModel(brand,model);
+    }
     //Security --> Admin
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     CarResponse addCar(@RequestBody CarRequest body){

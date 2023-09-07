@@ -46,6 +46,16 @@ public class CarService {
         return response;
     }
 
+    public List<CarResponse> getCarsByBrandAndModel(String brand, String model) {
+        List<Car> cars = carRepository.findCarsByBrandAndModel(brand, model);
+        List<CarResponse> response= new ArrayList<>();
+        for(Car car : cars){
+            CarResponse cr = new CarResponse(car, false);
+            response.add(cr);
+        }
+        return response;
+    }
+
 
     public CarResponse addCar(CarRequest body) {
         if(carRepository.existsById(body.getId())){
@@ -89,6 +99,7 @@ public class CarService {
 
     public List<Car> findAllUnreservedCars(){
         //TODO
-        return null;}
+        return null;
+    }
 
 }

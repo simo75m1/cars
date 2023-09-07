@@ -66,12 +66,15 @@ public class ReservationService {
         }
         return response;
     }
-    public void deleteReservation(Reservation reservation){
-        //TODO
-    }
+
     public void editReservationDate(Reservation reservation, LocalDate newDate){
         //TODO
     }
+
+    public void deleteReservation(Reservation reservation){
+        //TODO
+    }
+
 
 
 }
