@@ -8,6 +8,7 @@ import dat3.car.entity.Reservation;
 import dat3.car.repository.CarRepository;
 import dat3.car.repository.MemberRepository;
 import dat3.car.repository.ReservationRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,8 +20,8 @@ import java.util.List;
 
 @Service
 public class ReservationService {
-    static ReservationRepository reservationRepository;
-    static MemberRepository memberRepository;
+    ReservationRepository reservationRepository;
+    MemberRepository memberRepository;
     CarRepository carRepository;
 
     public ReservationService(ReservationRepository reservationRepository, MemberRepository memberRepository, CarRepository carRepository) {
@@ -28,6 +29,8 @@ public class ReservationService {
         this.memberRepository = memberRepository;
         this.carRepository = carRepository;
     }
+
+
 
     public ReservationResponse reserveCar(ReservationRequest body){
         if(body.getDate().isBefore(LocalDate.now())){
@@ -54,11 +57,11 @@ public class ReservationService {
         }
         return response;
     }
-    public static List<ReservationResponse> getReservationsByMember(Member member){
-        if(!memberRepository.existsById(member.getUsername())){
+    public List<ReservationResponse> getReservationsByMember(String username){
+        if(!memberRepository.existsById(username)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this username does not exist");
         }
-        List<Reservation> reservations = reservationRepository.findAllReservationsByMemberUsername(member.getUsername());
+        List<Reservation> reservations = reservationRepository.findAllReservationsByMemberUsername(username);
         List<ReservationResponse> response = new ArrayList<>();
         for(Reservation reservation : reservations){
             ReservationResponse rr = new ReservationResponse(reservation);

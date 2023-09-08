@@ -2,11 +2,16 @@ package dat3.car.api;
 
 import dat3.car.dto.MemberRequest;
 import dat3.car.dto.MemberResponse;
+import dat3.car.dto.ReservationResponse;
+import dat3.car.entity.Reservation;
 import dat3.car.service.MemberService;
+import dat3.car.service.ReservationService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -14,16 +19,21 @@ import java.util.List;
 class MemberController {
 
     MemberService memberService;
+    ReservationService reservationService;
 
-    public MemberController(MemberService memberService)
-    {
+    public MemberController(MemberService memberService, ReservationService reservationService) {
         this.memberService = memberService;
+        this.reservationService = reservationService;
     }
 
     //Security Admin only
     @GetMapping
     List<MemberResponse> getMembers(){
-        return memberService.getMembers(false);
+        List<MemberResponse> members = memberService.getMembers(false);
+        for(MemberResponse member : members){
+            member.setReservations(reservationService.getReservationsByMember(member.getUsername()));
+        }
+        return members;
     }
     //Security admin only
     @GetMapping(path = "/{username}")

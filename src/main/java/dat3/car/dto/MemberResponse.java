@@ -27,7 +27,10 @@ public class MemberResponse {
     String street;
     String city;
     String zip;
+
+    //Method
     List<ReservationResponse> reservations;
+
 
     //@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
     LocalDateTime created;
@@ -45,7 +48,6 @@ public class MemberResponse {
         this.lastName = m.getLastName();
         this.city = m.getCity();
         this.zip = m.getZip();
-        this.reservations = ReservationService.getReservationsByMember(m);
         if(includeAll){
             this.created = m.getCreated();
             this.edited = m.getEdited();
