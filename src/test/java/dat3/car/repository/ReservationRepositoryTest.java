@@ -30,13 +30,14 @@ class ReservationRepositoryTest {
     CarRepository carRepository;
     @Autowired
     MemberRepository memberRepository;
+    ReservationService reservationService;
     Car c1, c2;
     Member m1, m2;
     //HAVE TO SAVE CAR AND MEMBER TO THEIR REPOS OR YOU GET INTEGRITY CONSTRAINT VIOLATION
     @BeforeEach
     void setUp(){
-        c1 = new Car(1,"Toyota", "Aygo", 300, 100);
-        c2 = new Car(2,"Toyota", "Supra", 600, 300);
+        c1 = new Car("Toyota", "Aygo", 300, 100);
+        c2 = new Car("Toyota", "Supra", 600, 300);
         carRepository.save(c1);
         carRepository.save(c2);
         m1 = new Member("user1", "pw1", "email1", "fn1", "ln1",  "street1", "city1", "zip1");
@@ -45,8 +46,7 @@ class ReservationRepositoryTest {
         memberRepository.save(m2);
         reservationRepository.save(new Reservation(LocalDate.now().plusDays(5), c1, m1));
         reservationRepository.save(new Reservation(LocalDate.now().plusDays(10), c2, m1));
-        //reservationService = new ReservationService(reservationRepository); //Set up memberService with the mock (H2) database
-
+        reservationService = new ReservationService(reservationRepository, memberRepository, carRepository);
     }
     @Test
     void testFindReservationsByUsername(){
