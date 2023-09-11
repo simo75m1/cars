@@ -19,21 +19,15 @@ import java.util.List;
 class MemberController {
 
     MemberService memberService;
-    ReservationService reservationService;
 
     public MemberController(MemberService memberService, ReservationService reservationService) {
         this.memberService = memberService;
-        this.reservationService = reservationService;
     }
 
     //Security Admin only
     @GetMapping
     List<MemberResponse> getMembers(){
-        List<MemberResponse> members = memberService.getMembers(false);
-        for(MemberResponse member : members){
-            member.setReservations(reservationService.getReservationsByMember(member.getUsername()));
-        }
-        return members;
+        return memberService.getMembers(false);
     }
     //Security admin only
     @GetMapping(path = "/{username}")

@@ -28,16 +28,13 @@ public class MemberResponse {
     String city;
     String zip;
 
-    //Method
-    List<ReservationResponse> reservations;
-
-
     //@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
     LocalDateTime created;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
     LocalDateTime edited;
     Integer ranking;
     Boolean approved;
+    List<ReservationResponse> reservations;
 
     //Convert Member Entity to Member DTO
     public MemberResponse(Member m, boolean includeAll) {
@@ -54,6 +51,9 @@ public class MemberResponse {
             this.approved = m.isApproved();
             this.ranking = m.getRanking();
         }
+        this.reservations = m.getReservations().stream()
+                .map(res -> new ReservationResponse(res))
+                .toList();
     }
 
 

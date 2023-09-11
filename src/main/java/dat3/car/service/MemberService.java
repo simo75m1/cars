@@ -24,15 +24,10 @@ public class MemberService {
 
     public List<MemberResponse> getMembers(boolean includeAll) {
         List<Member> members = memberRepository.findAll();
-        List<MemberResponse> response = new ArrayList<>();
-        for(Member member : members){
-            MemberResponse mr = new MemberResponse(member, includeAll);
-            response.add(mr);
-        }
-        /* Alternativ løsning til response og for loop
-        List<MemberResponse> response = members.stream().map((member -> new MemberResponse(member, includeAll))).toList();
-        */
-        return response;
+
+        //.stream() gennemgår members listen, og laver alle member objects til memberResponses,
+        // og returnere dem i en liste
+        return members.stream().map((member -> new MemberResponse(member, includeAll))).toList();
     }
     public MemberResponse addMember(MemberRequest body)
     {
