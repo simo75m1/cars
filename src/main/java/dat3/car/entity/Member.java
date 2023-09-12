@@ -33,12 +33,9 @@ public class Member extends UserWithRoles
     private int ranking;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
-    List<Reservation> reservations;
+    List<Reservation> reservations = new ArrayList<>();
     public void addReservation(Reservation reservation)
     {
-        if (reservations == null){
-            reservations = new ArrayList<>();
-        }
         reservations.add(reservation);
     }
 
