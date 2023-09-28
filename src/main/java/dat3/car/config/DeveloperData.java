@@ -87,11 +87,12 @@ public class DeveloperData implements ApplicationRunner{
         carRepository.save(new Car("Toyota", "Rav4", 1300, 240));
         carRepository.save(new Car("Ford", "Escape", 1200, 220));
 
-        memberRepository.save(new Member("simo75m1", "testkode1", "simo75m1@stud.kea.dk", "Simon", "Hansen", "Elstarvej 24", "Valby", "2500"));
-        memberRepository.save(new Member("simonhansen", "testkode1", "simonhansen2000@hotmail.com", "Simon", "Hansen", "Elstarvej 24", "Valby", "2500"));
+        memberRepository.save(new Member("user1", "testkode1", "test@stud.kea.dk", "Jens", "Hansen", "Gågaden", "Valby", "2500"));
+        memberRepository.save(new Member("sebastian", "testkode1", "test@hotmail.com", "Peter", "Hansen", "Lyngbyvej", "Roskidle", "4000"));
 
         Car car1 = new Car("VW", "Golf", 760, 25);
         Member m1 = new Member("Jan","test12","a@b.dk","Jan","Jensen","Lyngbyvej 1","Lyngby","2800");
+        m1.addRole(Role.USER);
         carRepository.save(car1);
         memberRepository.save(m1);
 

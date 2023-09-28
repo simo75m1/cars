@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .parent {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 1px 1px;
+        }
+        .item {
+            background-color: lightskyblue;
+            border: 1px solid #fff;
+            padding: 5px 5px 5px 2em;
+            min-height: 250px;
+        }
+    </style>
+    <script src="../static/JS/client.js"></script>
+</head>
+<body style="font-family: sans-serif">
+<div style="margin-left: 10%;width: 75%;margin-right: auto">
+    <h2>Car's 'R' Us Client Demo - Version poor ;-)</h2>
+    <div class="parent">
+        <div class="item">
+            <h3>Show all Members or Cars</h3>
+            <button id="btn-get-all">Get all</button>
+            <p>Show what you find here</p>
+        </div>
+        <div class="item">
+            <h3>Find a single Member or Car</h3>
+            <label for="text-for-id">Id</label>&nbsp;<input id="text-for-id"/>
+            <button>Find</button>
+            <p>Show what you find here</p>
+        </div>
+        <div class="item">
+            <h3>Add a Car or a Member</h3>
+            <div><label for="input-field1">Field-1</label>&nbsp;<input id="input-field1"/></div>
+            <div><label for="input-field2">Field-2</label>&nbsp;<input id="input-field2"/></div>
+            <p> ..... remaining fields</p>
+            <button>Submit new item</button>
+            <p>Show returned data, if any</p>
+            <p>Use one of the two GET pages to verify that "something" was added</p>
+        </div>
+        <div class="item">
+            <h3>Edit a Car or a Member</h3>
+            <label for="text-for-id2">Id</label>&nbsp;<input id="text-for-id2"/>
+            <button>Find item to edit</button>
+            <p>Show what you find here, and let users edit fields</p>
+            <p>......</p>
+            <button>Submit edited item</button>
+            <p>Use one of the two GET pages to verify that "something" was added</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

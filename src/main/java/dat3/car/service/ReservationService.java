@@ -61,13 +61,9 @@ public class ReservationService {
         if(!memberRepository.existsById(username)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Member with this username does not exist");
         }
-        List<Reservation> reservations = reservationRepository.findAllReservationsByMemberUsername(username);
-        List<ReservationResponse> response = new ArrayList<>();
-        for(Reservation reservation : reservations){
-            ReservationResponse rr = new ReservationResponse(reservation);
-            response.add(rr);
-        }
-        return response;
+        Member member = memberRepository.findById(username).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"User Not Found"));
+        List<ReservationResponse> reservations = member.getReservations().stream().map(r->new ReservationResponse(r)).toList();
+        return reservations;
     }
 
     public void editReservationDate(Reservation reservation, LocalDate newDate){

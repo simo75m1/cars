@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/members")
 class MemberController {
 
@@ -34,7 +35,6 @@ class MemberController {
     MemberResponse getMemberById(@PathVariable String username) throws Exception {
         return memberService.findById(username);
     }
-
     //Security --> Anonymous
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     MemberResponse addMember(@RequestBody MemberRequest body){

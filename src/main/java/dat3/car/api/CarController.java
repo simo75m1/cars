@@ -5,11 +5,13 @@ import dat3.car.dto.CarResponse;
 import dat3.car.service.CarService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/cars")
 public class CarController {
     CarService carService;
@@ -23,6 +25,12 @@ public class CarController {
     List<CarResponse> getCars() {
         return carService.getCars(false);
     }
+    //Security ADMIN
+
+    @GetMapping("/admin")
+    List<CarResponse> getCarsAll(){
+        return carService.getCars(true); //false --> Only info relevant for customers
+    }
 
     //Security --> Admin only
     @GetMapping(path = "/{id}")
@@ -30,12 +38,9 @@ public class CarController {
         return carService.findById(id);
     }
 
+
     //Can be used to filter results for customers
     //Security --> Anonymous
-    @GetMapping(path = "/{brand}")
-    List<CarResponse> getCarByBrand(@PathVariable String brand)throws Exception {
-        return carService.getCarsByBrand(brand);
-    }
     @GetMapping(path="/{brand}/{model}")
     List<CarResponse> getCarByBrandAndModel(@PathVariable String brand, @PathVariable String model) throws Exception{
         return carService.getCarsByBrandAndModel(brand,model);

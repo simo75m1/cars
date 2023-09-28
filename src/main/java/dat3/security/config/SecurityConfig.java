@@ -68,18 +68,22 @@ public class SecurityConfig {
             //This is for demo purposes only, and should be removed for a real system
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/demo/anonymous")).permitAll()
 
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/cars")).permitAll()
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/cars/admin")).hasAuthority("ADMIN")
+
             //Allow index.html and everything else on root level. So make sure to put ALL your endpoints under /api
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET,"/*")).permitAll()
 
             .requestMatchers(mvcMatcherBuilder.pattern("/error")).permitAll()
 
             //Use this to completely disable security (Will not work if endpoints has been marked with @PreAuthorize)
-            .requestMatchers(mvcMatcherBuilder.pattern("/**")).permitAll());
+
 
             //This is for demo purposes only, and should be removed for a real system
             //.requestMatchers(HttpMethod.GET, "/api/demouser/user-only").hasAuthority("USER")
             // .requestMatchers(HttpMethod.GET, "/api/demouser/admin-only").hasAuthority("ADMIN")
-            //.anyRequest().authenticated());
+            // .requestMatchers(mvcMatcherBuilder.pattern("/**")).permitAll());
+            .anyRequest().authenticated());
 
     return http.build();
   }
